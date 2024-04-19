@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import (QApplication)
 from typing import List
 
-from lab_1.user_interface.client import Client
+from user_interface.client import Client
 
 
 class App(QApplication):
