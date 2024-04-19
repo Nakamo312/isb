@@ -185,5 +185,6 @@ class Client(QWidget):
         Encrypts text using the Caesar algorithm
         """
         self.dialog = NumberInputDialog()
+        self.dialog.exec_()
         self.decoder = Decoder(self.text.toPlainText().lower())
         self.result_text.setText(self.decoder.caesars_cipher(self.dialog.key,  lng=self.dialog.lng))
