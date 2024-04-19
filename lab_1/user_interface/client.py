@@ -21,6 +21,8 @@ char_freq = json_read(os.path.join("out", "ru.json"))
 class NumberInputDialog(QDialog):
     def __init__(self):
         super().__init__()
+        self.key = None
+        self.lng = "ru"
         self.setWindowTitle("Сaesar key")
         label = QLabel("Enter key:")
         self.line_edit = QLineEdit()
@@ -38,12 +40,11 @@ class NumberInputDialog(QDialog):
         self.setLayout(layout)
 
     def on_button_clicked(self):
-        number = int(self.line_edit.text())
-        lng = "eng"
+        self.key = int(self.line_edit.text())
+        self.lng = "eng"
         if self.russian_checkbox.isChecked():
-            lng = "ru"
+            self.lng = "ru"
         self.close()
-        return number
 
 
 class Client(QWidget):
@@ -183,7 +184,6 @@ class Client(QWidget):
         """
         Encrypts text using the Caesar algorithm
         """
-        dialog = NumberInputDialog()
-        key = dialog.exec_()
+        self.dialog = NumberInputDialog()
         self.decoder = Decoder(self.text.toPlainText().lower())
-        self.result_text.setText(self.decoder.caesars_cipher(5, lng="ru"))
+        self.result_text.setText(self.decoder.caesars_cipher(self.dialog.key,  lng=self.dialog.lng))
