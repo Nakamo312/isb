@@ -3,17 +3,7 @@
 #include "FetchData.h"
 
 
-std::bitset<128> BinarySequence()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 1);
-    std::bitset<128> bitSequence;
-    for (int i = 0; i < bitSequence.size(); ++i) {
-        bitSequence[i] = dis(gen);
-    }
-    return bitSequence;
-}
+
 
 int main() {
     std::string filePath = OpenFileDialog(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOWNORMAL);
