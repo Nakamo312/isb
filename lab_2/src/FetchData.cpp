@@ -20,7 +20,6 @@ std::string APIENTRY OpenFileDialog(HINSTANCE hInstance, HINSTANCE hPrevInstance
     if (GetOpenFileName(&ofn))
     {
         std::string filePath = ofn.lpstrFile;
-        //delete[] ofn.lpstrFile;
         return filePath;
     }
 }

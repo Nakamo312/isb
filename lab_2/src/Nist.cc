@@ -1,7 +1,7 @@
 
 #include "Nist.h"
 
-double FreqBitTest(std::bitset<128> bitSequence)
+double FreqBitTest(const std::bitset<128>& bitSequence)
 {
     size_t N = bitSequence.size();
     int summ = 0;
@@ -15,7 +15,7 @@ double FreqBitTest(std::bitset<128> bitSequence)
     double Sn = float(summ) / sqrt(N);
     return erfc(Sn / sqrt(2));
 }
-double IdenticalBitTest(std::bitset<128> bitSequence)
+double IdenticalBitTest(const std::bitset<128>& bitSequence)
 {
     size_t N = bitSequence.size();
     int summ = 0;
@@ -52,7 +52,7 @@ std::vector<std::bitset<16>> split_bitset_into_blocks(const std::bitset<128>& bi
 
     return blocks;
 }
-double LongestBitTest(std::bitset<128> bitSequence)
+double LongestBitTest(const std::bitset<128>& bitSequence)
 {
     int M = 8;
     int N = bitSequence.size();
