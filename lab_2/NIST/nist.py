@@ -1,6 +1,8 @@
-from typing import List
 import math
-from scipy.special import erfc, gammainc
+import mpmath
+
+from typing import List
+from scipy.special import erfc
 from bitarray import bitarray
 
 
@@ -11,6 +13,10 @@ class Nist:
     def freq_bit_test(bit_sequence: bitarray) -> float:
         """
         Frequency (Monobit) Test
+        Args:
+            bit_sequence (bitarray): A bitarray representing the bit sequence to be tested.
+        Returns:
+            (float) The p-value of the test.
         """
         n = len(bit_sequence)
         summ = 0
@@ -25,6 +31,10 @@ class Nist:
     def identical_bit_test(bit_sequence: bitarray) -> float:
         """
         Frequency Test within a Block
+        Args:
+            bit_sequence (bitarray): A bitarray representing the bit sequence to be tested.
+        Returns:
+            (float) The p-value of the test.
         """
         n = len(bit_sequence)
         summ = sum(bit_sequence)
@@ -41,34 +51,35 @@ class Nist:
     def longest_bit_test(bit_sequence: bitarray, block_size: int) -> float:
         """
         Longest Run of Ones in a Block Test
+        Args:
+            bit_sequence (bitarray): A bitarray representing the bit sequence to be tested.
+        Returns:
+            (float) The p-value of the test.
         """
         v = [0 for i in range(4)]
         n = len(bit_sequence)
         m: int = int(n / block_size)
         blocks = [bit_sequence[i * block_size: (i + 1) * block_size] for i in range(m)]
-
-        max_run_lengths = []
         for block in blocks:
             run_length = 0
             max_run = 0
             for bit in block:
-                if bit == 1:
+                if int(bit) == 1:
                     run_length += 1
                     max_run = max(max_run, run_length)
                 else:
-                    max_run_lengths.append(max_run)
                     run_length = 0
-            max_run_lengths.append(max_run)
-
-            if max_run <= 1:
-                v[0] += 1
-            elif max_run == 2:
-                v[1] += 1
-            elif max_run == 3:
-                v[2] += 1
-            else:
-                v[3] += 1
+            match max_run:
+                case 1 if max_run <= 1:
+                    v[0] += 1
+                case 2:
+                    v[1] += 1
+                case 3:
+                    v[2] += 1
+                case _:
+                    v[3] += 1
         khi = 0
         for i in range(len(v)):
-            khi += pow(v[i] - 16 * Nist.pi[i], 2) / (16 * Nist.pi[i])
-        return gammainc(3 / 2, khi / 2)
+            khi += ((v[i] - 16 * Nist.pi[i]) ** 2) / (16 * Nist.pi[i])
+        p = mpmath.gammainc(3 / 2, khi / 2)
+        return float(p)

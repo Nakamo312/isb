@@ -1,6 +1,6 @@
+import argparse
 import logging
 import os
-import argparse
 
 from bitarray import bitarray
 

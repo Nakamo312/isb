@@ -11,7 +11,7 @@ def txt_read(file_path: str) -> str:
             data = f.read()
             return data
     except Exception as e:
-        logging.error(e)
+        logging.error(f"Failed to read file{e}")
 
 
 def json_write(file_path: str, **data) -> None:
@@ -22,4 +22,4 @@ def json_write(file_path: str, **data) -> None:
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except Exception as e:
-        logging.error(e)
+        logging.error(f"Failed to write to a file {e}")
