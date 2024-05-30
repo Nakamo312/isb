@@ -13,7 +13,7 @@ def read_txt(file_path: str) -> str:
             data = f.read()
             return data
     except Exception as e:
-        logging.error(e)
+        logging.error(f"file reading error: {e}")
 
 def write_txt(file_path: str, data: str) -> None:
     """Writes a string to a text file.
@@ -26,7 +26,7 @@ def write_txt(file_path: str, data: str) -> None:
             f.write(data)
             return data
     except Exception as e:
-        logging.error(e)
+        logging.error(f"file writing error: {e}")
 
 def read(file_path: str) -> str:
     """Reads a binary file and returns its content as a byte string.
@@ -40,7 +40,7 @@ def read(file_path: str) -> str:
             data = f.read()
             return data
     except Exception as e:
-        logging.error(e)
+        logging.error(f"binary file reading error: {e}")
 
 def json_read(file_path: str) -> dict:
     """Reads a JSON file and returns its content as a dictionary.
@@ -53,7 +53,7 @@ def json_read(file_path: str) -> dict:
         with open(file_path, "r", encoding="utf-8") as f:
             return json.load( f)
     except Exception as e:
-        logging.error(e)
+        logging.error(f"JSON file reading error: {e}")
 
 def write(file_path: str, data) -> None:
     """Writes data to a binary file.
@@ -65,4 +65,4 @@ def write(file_path: str, data) -> None:
         with open(file_path, "wb") as f:
             f.write(data)
     except Exception as e:
-        logging.error(e)
+        logging.error(f"JSON file writing error: {e}")
